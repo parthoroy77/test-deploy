@@ -1,0 +1,6 @@
+{
+  "buildCommand": "cd ../.. && npx turbo run build --filter=api...",
+  "outputDirectory": "dist",
+  "devCommand": "yarn run dev",
+  "installCommand": "cd ../.. && yarn install"
+}

@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "ts-node-dev --respawn --transpile-only ./src/server.ts",
     "postinstall": "cd .. && cd .. && yarn db:migrate && yarn db:generate",
-    "build": "npx esbuild ./src/server.ts --bundle --platform=node --outfile=dist/server.js",
+    "build": "tsup",
     "start": "node ./dist/server.js",
     "lint": "eslint --ignore-path .eslintignore --ext .js,.ts",
     "lint:fix": "npx eslint src --fix",
@@ -43,6 +43,7 @@
     "esbuild": "^0.23.1",
     "eslint": "^9.5.0",
     "ts-node-dev": "^2.0.0",
+    "tsup": "^8.2.4",
     "typescript": "^5.5.2"
   }
 }
