@@ -12,19 +12,20 @@ jobs:
   deploy-api:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: Install Node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
-          node-version: '16'
+          node-version: '18'
 
       - name: Install dependencies
-        run: yarn install
+        run: |
+          npm install -g yarn
+          yarn install
 
       - name: Build API
-        run: yarn build
-        working-directory: apps/api
+        run: yarn turbo run build --filter=api...
 
       - name: Deploy to Vercel
         uses: amondnet/vercel-action@v20
@@ -38,27 +39,27 @@ jobs:
     needs: deploy-api
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: Install Node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
-          node-version: '16'
+          node-version: '18'
 
       - name: Install dependencies
-        run: yarn install
+        run: |
+          npm install -g yarn
+          yarn install
 
       - name: Pull Env Variables
         run: npx vercel env pull .env.production --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
         working-directory: apps/api
 
       - name: Run Prisma Migrations
-        run: npx prisma migrate deploy
-        working-directory: packages/prisma
+        run: yarn workspace @repo/prisma prisma migrate deploy
 
       - name: Generate Prisma Client
-        run: npx prisma generate
-        working-directory: packages/prisma
+        run: yarn workspace @repo/prisma prisma generate
 
     env:
       VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
