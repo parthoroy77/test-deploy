@@ -1,0 +1,29 @@
+{
+  "name": "stellar-shop",
+  "private": true,
+  "scripts": {
+    "build": "turbo build",
+    "dev": "turbo dev",
+    "lint": "turbo lint",
+    "ui:add": "yarn workspace @repo/ui ui:add",
+    "db:migrate": "yarn workspace @repo/prisma db-migrate",
+    "db:generate": "yarn workspace @repo/prisma db-generate",
+    "db:studio": "yarn workspace @repo/prisma db-studio",
+    "format": "prettier --write \"**/*.{ts,tsx,md}\""
+  },
+  "devDependencies": {
+    "@repo/eslint-config": "*",
+    "@repo/typescript-config": "*",
+    "prettier": "^3.1.1",
+    "prettier-plugin-tailwindcss": "^0.6.5",
+    "turbo": "latest"
+  },
+  "packageManager": "yarn@1.22.22",
+  "engines": {
+    "node": ">=18"
+  },
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ]
+}
