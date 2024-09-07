@@ -7,7 +7,7 @@ export default defineConfig({
   splitting: false,
   sourcemap: true,
   clean: true,
-  outDir: "dist",
+  outDir: "./dist",
   external: ["@repo/utils", "@repo/prisma"],
   noExternal: ["@repo/utils", "@repo/prisma"],
 });
