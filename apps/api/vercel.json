@@ -1,6 +1,18 @@
 {
   "buildCommand": "yarn build",
   "outputDirectory": "dist",
-  "devCommand": "yarn run dev",
-  "installCommand": "yarn install"
+  "devCommand": "yarn dev",
+  "installCommand": "yarn install",
+  "builds": [
+    {
+      "src": "dist/server.js",
+      "use": "@vercel/node"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "dist/server.js"
+    }
+  ]
 }
