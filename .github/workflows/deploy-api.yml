@@ -24,8 +24,11 @@ jobs:
           npm install -g yarn
           yarn install
 
+      - name: Prisma Migrate
+        run: cd .. && cd .. && yarn db:migrate && yarn db:generate
+
       - name: Build API
-        run: yarn turbo run build --filter=api...
+        run: yarn build
 
       - name: Deploy to Vercel
         uses: amondnet/vercel-action@v20
@@ -34,39 +37,3 @@ jobs:
           vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
           vercel-project-id: ${{ secrets.VERCEL_API_PROJECT_ID }}
           working-directory: apps/api
-
-  run-migrations:
-    needs: deploy-api
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-
-      - name: Install Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '18'
-
-      - name: Install dependencies
-        run: |
-          npm install -g yarn
-          yarn install
-
-      - name: Pull Env Variables
-        run: npx vercel env pull .env.production --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
-        working-directory: apps/api
-
-      - name: Run Prisma Migrations
-        run: yarn workspace @repo/prisma db-migrate
-        env:
-          DATABASE_URL: ${{ secrets.DATABASE_URL }}
-
-      - name: Generate Prisma Client
-        run: yarn workspace @repo/prisma prisma generate
-        env:
-          DATABASE_URL: ${{ secrets.DATABASE_URL }}
-
-    env:
-      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-      VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
-      VERCEL_PROJECT_ID: ${{ secrets.VERCEL_API_PROJECT_ID }}
-      DATABASE_URL: ${{ secrets.DATABASE_URL }}
