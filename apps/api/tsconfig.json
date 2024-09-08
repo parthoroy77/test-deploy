@@ -1,14 +1,15 @@
 {
-  "extends": "@repo/typescript-config/base.json",
   "compilerOptions": {
-    "lib": ["ES2015"],
+    "target": "es2017",
+    "module": "commonjs",
     "outDir": "./dist",
     "rootDir": "./src",
-    "baseUrl": ".",
+    "strict": true,
+    "esModuleInterop": true,
     "paths": {
       "@repo/utils": ["../../packages/utils/src"]
     }
   },
-  "exclude": ["node_modules", "dist"],
-  "include": ["./src"]
+  "include": ["src/**/*"],
+  "exclude": ["node_modules"]
 }
